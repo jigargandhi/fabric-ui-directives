@@ -1,3 +1,5 @@
+/// <reference path="typings/karma/karma.d.ts"/>
+/// <reference path="typings/angularjs/angular-mocks.d.ts"/>
 /*
 Usage:
 <uif-toggle labelOn="{string}" labelOff="{string}" desc="{string}" toggled="property" />
@@ -6,7 +8,14 @@ Usage:
 var appModule = angular.module("fabricuiDirectives", []);
 var ToggleDirective = (function () {
     function ToggleDirective() {
-        this.templateUrl = "templates/toggle.html";
+        this.template = '<div class="ms-Toggle">' +
+            '<span class="ms-Toggle-description">{{desc}}</span>' +
+            '<input type="checkbox" id="{{uniqueId}}" class="ms-Toggle-input" ng-model="toggled" />' +
+            '<label for="{{uniqueId}}" class="ms-Toggle-field">' +
+            '<span class="ms-Label ms-Label--off">{{labelOff}}</span>' +
+            '<span class="ms-Label ms-Label--on">{{labelOn}}</span>' +
+            '</label>' +
+            '</div>';
         this.uniqueId = 1;
         this.scope = {
             labelOff: "@labelOff",

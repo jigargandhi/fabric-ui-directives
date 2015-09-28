@@ -4,13 +4,10 @@
 /// <reference path="../typings/angularjs/angular.d.ts"/>
 /// <reference path="../typings/jquery/jquery.d.ts"/>
 
+
 describe("toggleDirective", () => {
-    
-    
     beforeEach(() => {
         angular.mock.module('fabricuiDirectives');
-        angular.mock.module('templates');
-
     });
 
     afterEach(() => {
@@ -19,12 +16,12 @@ describe("toggleDirective", () => {
 
     it("should have unique ids", inject(($compile, $rootScope) => {
         var $scope = $rootScope.$new();
-        var toggle1 = $compile('<toggle desc="TEST" label-off="No" label-on="Yes" toggled="toggled"></toggle>')($scope);
+        var toggle1 = $compile('<uif-toggle desc="TEST" label-off="No" label-on="Yes" toggled="toggled"></toggle>')($scope);
         $scope.$apply();
-
+        
         var checkBox1 = $(toggle1[0]).find("input.ms-Toggle-input");
 
-        var toggle2 = $compile('<toggle desc="TEST" label-off="No" label-on="Yes" toggled="toggled"></toggle>')($scope);
+        var toggle2 = $compile('<uif-toggle desc="TEST" label-off="No" label-on="Yes" toggled="toggled"></toggle>')($scope);
         $scope.$apply();
         var checkBox2 = $(toggle2[0]).find("input.ms-Toggle-input");
         expect(checkBox1[0].id === checkBox2[0].id).toBe(false);

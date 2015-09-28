@@ -18,9 +18,9 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/jquery/dist/jquery.min.js',
-      'js/*.js',
-      'js/tests/*.js',
-      'templates/*.html'
+      'src/js/*.js',
+      'src/js/tests/*.js',
+      'src/templates/*.html'
     ],
 
 
@@ -32,20 +32,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'templates/*.html': ['ng-html2js']
     },
-
-    ngHtml2JsPreprocessor: {
-        
-        // - setting this option will create only a single module that contains templates
-        //   from all the files, so you can load them all with module('foo')
-        // - you may provide a function(htmlPath, originalPath) instead of a string
-        //   if you'd like to generate modules dynamically
-        //   htmlPath is a originalPath stripped and/or prepended
-        //   with all provided suffixes and prefixes
-        moduleName: 'templates'
-    },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

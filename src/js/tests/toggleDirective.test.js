@@ -6,7 +6,6 @@
 describe("toggleDirective", function () {
     beforeEach(function () {
         angular.mock.module('fabricuiDirectives');
-        angular.mock.module('templates');
     });
     afterEach(function () {
         // myfunc.reset();
@@ -41,11 +40,5 @@ describe("toggleDirective", function () {
         $scope.toggled = false;
         $scope.$apply();
         expect(checkBox.is(':checked')).toBe(false);
-        checkBox.click();
-
-        expect(checkBox.is(':checked')).toBe(true);
-        expect($scope.toggled).toBe(true);
-
-
     }));
 });
