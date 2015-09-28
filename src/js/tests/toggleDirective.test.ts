@@ -13,7 +13,6 @@ describe("toggleDirective", () => {
     afterEach(() => {
         // myfunc.reset();
     });
-
     it("should have unique ids", inject(($compile, $rootScope) => {
         var $scope = $rootScope.$new();
         var toggle1 = $compile('<uif-toggle desc="TEST" label-off="No" label-on="Yes" toggled="toggled"></toggle>')($scope);
