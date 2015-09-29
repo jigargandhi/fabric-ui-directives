@@ -1,8 +1,3 @@
-/// <reference path="../typings/karma/karma.d.ts"/>
-/// <reference path="../typings/jasmine/jasmine.d.ts"/>
-/// <reference path="../typings/angularjs/angular-mocks.d.ts"/>
-/// <reference path="../typings/angularjs/angular.d.ts"/>
-/// <reference path="../typings/jquery/jquery.d.ts"/>
 describe("toggleDirective", function () {
     beforeEach(function () {
         angular.mock.module('fabricuiDirectives');

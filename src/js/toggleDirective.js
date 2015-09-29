@@ -1,5 +1,3 @@
-/// <reference path="typings/karma/karma.d.ts"/>
-/// <reference path="typings/angularjs/angular-mocks.d.ts"/>
 /*
 Usage:
 <uif-toggle labelOn="{string}" labelOff="{string}" desc="{string}" toggled="property" />

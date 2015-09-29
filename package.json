@@ -11,8 +11,8 @@
     "karma-chrome-launcher": "^0.2.0",
     "karma": "^0.13.10",
     "karma-jasmine": "^0.3.6",
-	  "jquery": "^2.1.4"
-  },  
+    "jquery": "^2.1.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,5 +25,12 @@
   "bugs": {
     "url": "https://github.com/rolandoldengarm/fabric-ui-directives/issues"
   },
-  "homepage": "https://github.com/rolandoldengarm/fabric-ui-directives#readme"
+  "homepage": "https://github.com/rolandoldengarm/fabric-ui-directives#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.4.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.18"
+  }
 }

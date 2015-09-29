@@ -19,7 +19,7 @@ module.exports = function(config) {
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/jquery/dist/jquery.min.js',
             'src/js/*.js',
-            'src/js/tests/*.js'
+            'src/tests/*.js'
         ],
 
 
@@ -59,7 +59,7 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
 
         // Continuous Integration mode
