@@ -6,7 +6,7 @@ Usage:
 var ToggleDirective = (function () {
     function ToggleDirective() {
         this.template = '<div class="ms-Toggle">' +
-            '<span class="ms-Toggle-description">{{desc}}</span>' +
+            '<span class="test ms-Toggle-description">{{desc}}</span>' +
             '<input type="checkbox" id="{{uniqueId}}" class="ms-Toggle-input" ng-model="toggled" />' +
             '<label for="{{uniqueId}}" class="ms-Toggle-field">' +
             '<span class="ms-Label ms-Label--off">{{labelOff}}</span>' +
