@@ -7,4 +7,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>My package description.</description>
     </metadata>
+  <files>
+    <file src="dist\fabricui-directives.js" target="content\scripts" />
+  </files>
 </package>

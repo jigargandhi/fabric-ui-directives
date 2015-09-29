@@ -9,7 +9,6 @@ gulp.task('minify', function() {
     gulp.src('src/js/*.js')
         .pipe(concat('fabricui-directives.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./content/'))
         .pipe(gulp.dest('./dist/'));
 });
 
