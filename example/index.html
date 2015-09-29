@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../src/js/toggleDirective.js"></script>
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css"/>
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css"/>
+    <script src="index.js"></script>
+</head>
+
+<body ng-app="testApp" ng-controller="testController">
+    <h1 class="ms-font-su">Toggle</h1>
+    <uif-toggle labelOff="Off" labelOn="On" toggled="toggled" desc="TEST"></uif-toggle>
+    <span>Toggled: {{toggled}}</span>
+
+</body>
+</html>
