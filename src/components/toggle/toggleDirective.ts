@@ -3,7 +3,6 @@ Usage:
 <uif-toggle labelOn="{string}" labelOff="{string}" desc="{string}" toggled="property" />
 
 */
-var appModule = angular.module("fabricuiDirectives", []);
 
 class ToggleDirective implements ng.IDirective {
     
@@ -38,4 +37,6 @@ class ToggleDirective implements ng.IDirective {
     }
 }
 
-appModule.directive("uifToggle", ToggleDirective.factory());
+
+angular.module("fabric.ui.components.toggle", ['fabric.ui.components'])
+    .directive("uifToggle", ToggleDirective.factory());

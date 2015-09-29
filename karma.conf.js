@@ -18,8 +18,9 @@ module.exports = function(config) {
             'node_modules/angular/angular.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'node_modules/jquery/dist/jquery.min.js',
-            'src/js/*.js',
-            'src/tests/*.js'
+            'src/core/*.js',
+            'src/components/*/*.js'
+            
         ],
 
 
