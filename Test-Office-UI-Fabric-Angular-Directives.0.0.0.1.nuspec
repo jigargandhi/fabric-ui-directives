@@ -8,6 +8,6 @@
         <description>My package description.</description>
     </metadata>
     <files>
-        <file src="dist\fabricui-directives.js" target="Scripts\fabricui-directives\fabricui-directives.js" />
+        <file src="dist\fabricui-directives.js" target="Scripts\fabricui-directives.js" />
     </files>
 </package>
