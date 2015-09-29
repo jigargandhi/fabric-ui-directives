@@ -23,6 +23,5 @@ var TextBoxDirective = (function () {
     };
     return TextBoxDirective;
 })();
-//todo the module declaration (with []) should be in a separate file
 angular.module("fabric.ui.components.textbox", ['fabric.ui.components'])
     .directive("uifTextbox", TextBoxDirective.factory());
