@@ -21,7 +21,6 @@ describe("textBoxDirective", function () {
         var textBox = $compile('<uif-textbox value="textBoxValue"></uif-textbox>')($scope);
         $scope.$apply();
         var textField = $(textBox[0]).find('.ms-TextField-field');
-        //    expect(textBox[0].outerHTML).toBe('x');
         expect(textField.length).toBe(1);
         expect(textField.val()).toBe('Test 1');
         $scope.textBoxValue = "Test 2";

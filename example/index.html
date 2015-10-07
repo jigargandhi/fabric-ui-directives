@@ -3,9 +3,10 @@
 <head>
     <title></title>
     <meta charset="utf-8"/>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="../node_modules/angular/angular.js"></script>
-    <script src="../src/js/textBoxDirective.js"></script>
-    <script src="../src/js/toggleDirective.js"></script>
+
+    <script src="../dist/fabricui-directives.js"></script>
     
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css"/>
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css"/>
@@ -20,6 +21,10 @@
     <h1 class="ms-font-su">Textbox</h1>
     <input type="text" ng-model="testTextBox"/>
 
-    <uif-textbox value="testTextBox"/>
+    <!--<uif-textbox value="testTextBox"/>-->
+
+
+    <h1 class="ms-font-su">Datepicker</h1>
+    <uif-datepicker months="Jan,Feb,Maa,Apr,Mei,Jun,Jul,Aug,Sep,Okt,Nov,Dec"></uif-datepicker>
 </body>
 </html>

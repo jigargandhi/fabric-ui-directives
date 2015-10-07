@@ -6,9 +6,13 @@ var Server = require('karma').Server;
 gulp.task('default', ['test', 'minify']);
 
 gulp.task('minify', function() {
-    gulp.src('src/js/*.js')
-        .pipe(concat('fabricui-directives.js'))
+    gulp.src(['src/core/*.js', 'src/externals/*.js', 'src/components/**/*Directive.js'])
+        .pipe(concat('fabricui-directives.min.js'))
         .pipe(uglify())
+        .pipe(gulp.dest('./dist/'));
+
+    gulp.src(['src/core/*.js', 'src/externals/*.js', 'src/components/**/*Directive.js'])
+        .pipe(concat('fabricui-directives.js'))
         .pipe(gulp.dest('./dist/'));
 });
 
