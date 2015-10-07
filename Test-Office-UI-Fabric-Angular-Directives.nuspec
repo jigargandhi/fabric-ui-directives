@@ -2,12 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Test-Office-UI-Fabric-Angular-Directives</id>
-        <version>0.0.0.3-alpha</version>
+        <version>0.0.0.4-alpha</version>
         <authors>RolandO</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>My package description.</description>
     </metadata>
   <files>
     <file src="dist\fabricui-directives.js" target="content\scripts" />
+    <file src="dist\fabricui-directives.min.js" target="content\scripts" />
   </files>
 </package>
