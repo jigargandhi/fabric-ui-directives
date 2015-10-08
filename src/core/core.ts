@@ -4,6 +4,6 @@ interface Window {
     dump(message);
 }
 
-if (!window.dump) {
-    window.dump = console.log;
+if (!console.log) {
+    console.log = log => {}
 }

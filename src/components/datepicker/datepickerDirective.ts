@@ -1,39 +1,25 @@
 ﻿/// <reference path="../../../typings/pickadate/pickadate.d.ts" />
 
 module Fabric.UI.Components.DatePicker {
-
+    export class TestController {}
     export class DatePickerController {
         static $inject = ['$element', '$scope'];
-        static dateField: JQuery;
-        static picker: Pickadate.DatePicker;
-        $element:JQuery;
-        constructor( $element: JQuery, public $scope: IDatePickerDirectiveScope) {
-            $scope.vm = this;
-            this.$element = $($element);
-            //window.dump(this.$element.find('.ms-label').length);
-            //window.dump(this.$element.find('.ms-TextField-field').html());
-            //window.dump($($element).find('.ms-TextField-field').html());
-            //var datefield = $element.find('.ms-TextField-field').pickadate();
-
-            window.dump("CONTROLLER CONSTRUCTED");
-            this.initConfiguration();
-            //this.initDatepicker();
-            // Any Jquery access goes here. Use $element
-
-            // Setup any $watch on $scope that you need
+        constructor($element: JQuery, public $scope: IDatePickerDirectiveScope) {
         }
 
-        initConfiguration() {
-            this.$scope.monthsArray = this.$scope.months.split(',');
-            if (this.$scope.monthsArray.length !== 12) {
-                throw "Months setting should have 12 months, separated by a comma";
-            }
+        static getPicker($element) {
+            return $element.find('.ms-TextField-field').pickadate('picker');
         }
 
-        static initDatepicker($element) {
+        
+        static setValue($element, value) {
+            this.getPicker($element).set('select', value);
+        }
+
+        static initDatepicker($element, ngModel) {
             var self = this;
             
-            this.dateField = $element.find('.ms-TextField-field').pickadate({
+            $element.find('.ms-TextField-field').pickadate({
                 // Strings and translations.
                 weekdaysShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
 
@@ -89,17 +75,19 @@ module Fabric.UI.Components.DatePicker {
                     outfocus: 'ms-DatePicker-day--outfocus'
                 }
             });
-            
 
-            this.picker = this.dateField.pickadate('picker');
-
+            var picker = this.getPicker($element);
             /** Respond to built-in picker events. */
-            this.picker.on({
+            picker.on({
                 render: function () {
                     self.updateCustomView($element);
                 },
                 open: function () {
                     self.scrollUp($element);
+                },
+                set: function (value) {
+                    var formattedValue = picker.get('select', 'yyyy-mm-dd');
+                    ngModel.$setViewValue(formattedValue);
                 }
             });
         }
@@ -113,7 +101,7 @@ module Fabric.UI.Components.DatePicker {
             var $monthPicker = $element.find('.ms-DatePicker-monthPicker');
             var $yearPicker = $element.find('.ms-DatePicker-yearPicker');
             var $pickerWrapper = $element.find('.ms-DatePicker-wrap');
-            var $picker = $element.find('.ms-TextField-field').pickadate('picker');
+            var $picker = this.getPicker($element);
             //var $picker = this.picker;
             var self = this;
             
@@ -131,42 +119,42 @@ module Fabric.UI.Components.DatePicker {
             $monthControls.on('click', '.js-prevMonth', function (event) {
                 event.preventDefault();
                 var newMonth = $picker.get('highlight').month - 1;
-                DatePickerController.changeHighlightedDate(null, newMonth, null);
+                DatePickerController.changeHighlightedDate($element, null, newMonth, null);
             });
             
             /** Move ahead one month. */
             $monthControls.on('click', '.js-nextMonth', function (event) {
                 event.preventDefault();
                 var newMonth = $picker.get('highlight').month + 1;
-                self.changeHighlightedDate( null, newMonth, null);
+                self.changeHighlightedDate($element, null, newMonth, null);
             });
 
             /** Move back one year. */
             $monthPicker.on('click', '.js-prevYear', function (event) {
                 event.preventDefault();
                 var newYear = $picker.get('highlight').year - 1;
-                self.changeHighlightedDate(newYear, null, null);
+                self.changeHighlightedDate($element, newYear, null, null);
             });
 
             /** Move ahead one year. */
             $monthPicker.on('click', '.js-nextYear', function (event) {
                 event.preventDefault();
                 var newYear = $picker.get('highlight').year + 1;
-                self.changeHighlightedDate(newYear, null, null);
+                self.changeHighlightedDate($element, newYear, null, null);
             });
 
             /** Move back one decade. */
             $yearPicker.on('click', '.js-prevDecade', function (event) {
                 event.preventDefault();
                 var newYear = $picker.get('highlight').year - 10;
-                self.changeHighlightedDate( newYear, null, null);
+                self.changeHighlightedDate($element, newYear, null, null);
             });
 
             /** Move ahead one decade. */
             $yearPicker.on('click', '.js-nextDecade', function (event) {
                 event.preventDefault();
                 var newYear = $picker.get('highlight').year + 10;
-                self.changeHighlightedDate(newYear, null, null);
+                self.changeHighlightedDate($element, newYear, null, null);
             });
 
             /** Go to the current date, shown in the day picking view. */
@@ -178,7 +166,7 @@ module Fabric.UI.Components.DatePicker {
                 $picker.set('select', [now.getFullYear(), now.getMonth(), now.getDate()]);
 
                 /** Switch to the default (calendar) view. */
-                this.$element.removeClass('is-pickingMonths').removeClass('is-pickingYears');
+                $element.removeClass('is-pickingMonths').removeClass('is-pickingYears');
 
             });
 
@@ -193,7 +181,7 @@ module Fabric.UI.Components.DatePicker {
                 var newDay = $(this).attr('data-day');
 
                 /** Update the date. */
-                self.changeHighlightedDate(newYear, newMonth, newDay);
+                self.changeHighlightedDate($element, newYear, newMonth, newDay);
 
                 /** If we've been in the "picking months" state on mobile, remove that state so we show the calendar again. */
                 if ($element.hasClass('is-pickingMonths')) {
@@ -211,7 +199,7 @@ module Fabric.UI.Components.DatePicker {
                 var newDay = $(this).attr('data-day');
 
                 /** Update the date. */
-                self.changeHighlightedDate(newYear, newMonth, newDay);
+                self.changeHighlightedDate($element, newYear, newMonth, newDay);
 
                 /** If we've been in the "picking years" state on mobile, remove that state so we show the calendar again. */
                 if ($element.hasClass('is-pickingYears')) {
@@ -235,6 +223,8 @@ module Fabric.UI.Components.DatePicker {
                 $element.toggleClass('is-pickingYears');
             });
 
+
+
         }
 
         static updateCustomView($element) {
@@ -242,7 +232,7 @@ module Fabric.UI.Components.DatePicker {
             var $monthPicker = $element.find('.ms-DatePicker-monthPicker');
             var $yearPicker = $element.find('.ms-DatePicker-yearPicker');
             var $pickerWrapper = $element.find('.ms-DatePicker-wrap');
-            var $picker = $element.find('.ms-TextField-field').pickadate('picker');
+            var $picker = this.getPicker($element);
             //var $picker = this.picker;
 
             /** Set the correct year. */
@@ -282,21 +272,21 @@ module Fabric.UI.Components.DatePicker {
             }, 367);
         }
 
-        static changeHighlightedDate(newYear, newMonth, newDay) {
-
+        static changeHighlightedDate($element, newYear, newMonth, newDay) {
+            var picker = this.getPicker($element);
             /** All variables are optional. If not provided, default to the current value. */
             if (newYear == null) {
-                newYear = this.picker.get('highlight').year;
+                newYear = picker.get('highlight').year;
             }
             if (newMonth == null) {
-                newMonth = this.picker.get('highlight').month;
+                newMonth = picker.get('highlight').month;
             }
             if (newDay == null) {
-                newDay = this.picker.get('highlight').date;
+                newDay = picker.get('highlight').date;
             }
 
             /** Update it. */
-            this.picker.set('highlight', [newYear, newMonth, newDay]);
+            picker.set('highlight', [newYear, newMonth, newDay]);
 
         }
 
@@ -306,11 +296,12 @@ module Fabric.UI.Components.DatePicker {
     }
     
     export interface IDatePickerDirectiveScope extends ng.IScope {
-        bar: string;
         months: string;
         startLabel: string;
         placeHolderText: string;
         monthsArray: string[];
+        textValue: string;
+        value: string;
         // Local design only
         vm: DatePickerController;
         
@@ -349,54 +340,40 @@ module Fabric.UI.Components.DatePicker {
 
         constructor() {
         }
+        restrict = 'E';
         uniqueId = 1;
         scope = {
-            value: "=",
             months: "@",
             startLabel: "@",
             placeHolderText : "@"
         };
-        compile(element: JQuery, attrs: angular.IAttributes, transclude: any): any {
-            
-                if (!attrs["months"]) {
-                    attrs["months"] = "'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'";
-                }
-                if (!attrs["startLabel"]) {
-                    window.dump("Start label not set");
-                    attrs["startLabel"] = "Start Date";
-                }
+        require = "ngModel";
 
-                if (!attrs["placeHolderText"]) {
-                    attrs["placeHolderText"] = "Select a date";
-                }
 
-                DatePickerController.initDatepicker($(element));
-                /** Get some variables ready. */
-                //var element = $(element);
-                //var $monthControls = element.find('.ms-DatePicker-monthComponents');
-                    
-                //var $pickerWrapper = element.find('.ms-DatePicker-wrap');
-                    
-                    
-                /** Move the month picker into position. */
-                    
-                //$monthControls.appendTo($pickerWrapper);
-                
-            
-            
-            
-            //if (!attrs.attrOne) { attrs.attrOne = 'default value'; }
-            //if (!attrs.attrTwo) { attrs.attrTwo = 42; }
-
-        }
         //todo replace? 
+        
+        link($scope, $element, attrs, ngModel) {
+            if (!$scope.months) {
+                $scope.months = "'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'";
+            }
+            if (!$scope.startLabel) {
+                $scope.startLabel = "Start Date";
+            }
 
-        link(scope, elem, attrs) {
-            //dump("Link");
-            if (!this.uniqueId)
-                this.uniqueId = 1;
-            scope.uniqueId = this.uniqueId++;
+            if (!$scope.placeHolderText) {
+                $scope.placeHolderText = "Select a date";
+            }
             
+            $scope.monthsArray = $scope.months.split(',');
+            if ($scope.monthsArray.length !== 12) {
+               throw "Months setting should have 12 months, separated by a comma";
+            }
+
+            DatePickerController.initDatepicker($($element), ngModel);
+            ngModel.$render = function () {
+                console.log("RENDER!" + ngModel.$modelValue);
+                DatePickerController.setValue($($element), new Date(ngModel.$modelValue));
+            }
         }
 
         controller = DatePickerController;
