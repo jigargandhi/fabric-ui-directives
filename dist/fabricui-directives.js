@@ -14,37 +14,23 @@ var Fabric;
         (function (Components) {
             var DatePicker;
             (function (DatePicker) {
+                var TestController = (function () {
+                    function TestController() {
+                    }
+                    return TestController;
+                })();
+                DatePicker.TestController = TestController;
                 var DatePickerController = (function () {
                     function DatePickerController($element, $scope) {
                         this.$scope = $scope;
-                        $scope.vm = this;
-                        this.$element = $($element);
-                        //console.log(this.$element.find('.ms-label').length);
-                        //console.log(this.$element.find('.ms-TextField-field').html());
-                        //console.log($($element).find('.ms-TextField-field').html());
-                        //var datefield = $element.find('.ms-TextField-field').pickadate();
-                        console.log("CONTROLLER CONSTRUCTED");
-                        this.initConfiguration();
-                        //this.initDatepicker();
-                        // Any Jquery access goes here. Use $element
-                        // Setup any $watch on $scope that you need
-                        $scope.$watch("textValue", function (newValue, oldValue) {
-                            var picker = this.getPicker($element);
-                            console.log("newValue");
-                            // retrieve da
-                            //new Date('2011-04-11')
-                        });
                     }
                     DatePickerController.getPicker = function ($element) {
                         return $element.find('.ms-TextField-field').pickadate('picker');
                     };
-                    DatePickerController.prototype.initConfiguration = function () {
-                        this.$scope.monthsArray = this.$scope.months.split(',');
-                        if (this.$scope.monthsArray.length !== 12) {
-                            throw "Months setting should have 12 months, separated by a comma";
-                        }
+                    DatePickerController.setValue = function ($element, value) {
+                        this.getPicker($element).set('select', value);
                     };
-                    DatePickerController.initDatepicker = function ($element) {
+                    DatePickerController.initDatepicker = function ($element, ngModel) {
                         var self = this;
                         $element.find('.ms-TextField-field').pickadate({
                             // Strings and translations.
@@ -90,16 +76,18 @@ var Fabric;
                                 outfocus: 'ms-DatePicker-day--outfocus'
                             }
                         });
-                        var picker = $element.find('.ms-TextField-field').pickadate('picker');
-                        //this.picker = this.dateField.pickadate('picker');
+                        var picker = this.getPicker($element);
                         /** Respond to built-in picker events. */
-                        //this.picker.on({
                         picker.on({
                             render: function () {
                                 self.updateCustomView($element);
                             },
                             open: function () {
                                 self.scrollUp($element);
+                            },
+                            set: function (value) {
+                                var formattedValue = picker.get('select', 'yyyy-mm-dd');
+                                ngModel.$setViewValue(formattedValue);
                             }
                         });
                     };
@@ -111,7 +99,7 @@ var Fabric;
                         var $monthPicker = $element.find('.ms-DatePicker-monthPicker');
                         var $yearPicker = $element.find('.ms-DatePicker-yearPicker');
                         var $pickerWrapper = $element.find('.ms-DatePicker-wrap');
-                        var $picker = $element.find('.ms-TextField-field').pickadate('picker');
+                        var $picker = this.getPicker($element);
                         //var $picker = this.picker;
                         var self = this;
                         /** Move the month picker into position. */
@@ -213,7 +201,7 @@ var Fabric;
                         var $monthPicker = $element.find('.ms-DatePicker-monthPicker');
                         var $yearPicker = $element.find('.ms-DatePicker-yearPicker');
                         var $pickerWrapper = $element.find('.ms-DatePicker-wrap');
-                        var $picker = $element.find('.ms-TextField-field').pickadate('picker');
+                        var $picker = this.getPicker($element);
                         //var $picker = this.picker;
                         /** Set the correct year. */
                         $monthPicker.find('.ms-DatePicker-currentYear').text($picker.get('view').year);
@@ -245,7 +233,7 @@ var Fabric;
                         }, 367);
                     };
                     DatePickerController.changeHighlightedDate = function ($element, newYear, newMonth, newDay) {
-                        var picker = $element.find('.ms-TextField-field').pickadate('picker');
+                        var picker = this.getPicker($element);
                         /** All variables are optional. If not provided, default to the current value. */
                         if (newYear == null) {
                             newYear = picker.get('highlight').year;
@@ -268,7 +256,7 @@ var Fabric;
                         this.template = '<span>{{bar}}</span><div class="ms-TextField">' +
                             '<label class="ms-Label">{{startLabel}}</label>' +
                             '<i class="ms-DatePicker-event ms-Icon ms-Icon--event"></i>' +
-                            '<input class="ms-TextField-field" type="text" placeholder="{{placeHolderText}}" ng-model="textValue">' +
+                            '<input class="ms-TextField-field" type="text" placeholder="{{placeHolderText}}">' +
                             '</div>' +
                             '<div class="ms-DatePicker-monthComponents">' +
                             '<span class="ms-DatePicker-nextMonth js-nextMonth"><i class="ms-Icon ms-Icon--chevronRight"></i></span>' +
@@ -292,42 +280,36 @@ var Fabric;
                             '<span class="ms-DatePicker-nextDecade js-nextDecade"><i class="ms-Icon ms-Icon--chevronRight"></i></span>' +
                             '<span class="ms-DatePicker-prevDecade js-prevDecade"><i class="ms-Icon ms-Icon--chevronLeft"></i></span>' +
                             '</div></div>';
+                        this.restrict = 'E';
                         this.uniqueId = 1;
                         this.scope = {
-                            value: "=",
                             months: "@",
                             startLabel: "@",
                             placeHolderText: "@"
                         };
+                        this.require = "ngModel";
                         this.controller = DatePickerController;
                     }
-                    DatePickerDirective.prototype.compile = function (element, attrs, transclude) {
-                        if (!attrs["months"]) {
-                            attrs["months"] = "'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'";
-                        }
-                        if (!attrs["startLabel"]) {
-                            console.log("Start label not set");
-                            attrs["startLabel"] = "Start Date";
-                        }
-                        if (!attrs["placeHolderText"]) {
-                            attrs["placeHolderText"] = "Select a date";
-                        }
-                        DatePickerController.initDatepicker($(element));
-                        /** Get some variables ready. */
-                        //var element = $(element);
-                        //var $monthControls = element.find('.ms-DatePicker-monthComponents');
-                        //var $pickerWrapper = element.find('.ms-DatePicker-wrap');
-                        /** Move the month picker into position. */
-                        //$monthControls.appendTo($pickerWrapper);
-                        //if (!attrs.attrOne) { attrs.attrOne = 'default value'; }
-                        //if (!attrs.attrTwo) { attrs.attrTwo = 42; }
-                    };
                     //todo replace? 
-                    DatePickerDirective.prototype.link = function (scope, elem, attrs) {
-                        //dump("Link");
-                        if (!this.uniqueId)
-                            this.uniqueId = 1;
-                        scope.uniqueId = this.uniqueId++;
+                    DatePickerDirective.prototype.link = function ($scope, $element, attrs, ngModel) {
+                        if (!$scope.months) {
+                            $scope.months = "'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'";
+                        }
+                        if (!$scope.startLabel) {
+                            $scope.startLabel = "Start Date";
+                        }
+                        if (!$scope.placeHolderText) {
+                            $scope.placeHolderText = "Select a date";
+                        }
+                        $scope.monthsArray = $scope.months.split(',');
+                        if ($scope.monthsArray.length !== 12) {
+                            throw "Months setting should have 12 months, separated by a comma";
+                        }
+                        DatePickerController.initDatepicker($($element), ngModel);
+                        ngModel.$render = function () {
+                            console.log("RENDER!" + ngModel.$modelValue);
+                            DatePickerController.setValue($($element), new Date(ngModel.$modelValue));
+                        };
                     };
                     DatePickerDirective.factory = function () {
                         var directive = function () { return new DatePickerDirective(); };
