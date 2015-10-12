@@ -20,9 +20,7 @@ describe("toggleDirective", function () {
         $scope.toggled = true;
         var toggle = $compile('<uif-toggle label-off="No" label-on="Yes" toggled="toggled" text-location="right">Toggle this, or not</toggle>')($scope);
         $scope.$digest();
-        dump(toggle[0].outerHTML);
         var mainToggle = $(toggle[0]).find(".ms-Toggle");
-        dump(mainToggle.length);
         expect(mainToggle.hasClass("ms-Toggle--textRight")).toBe(true);
     }));
     it("should be able to set labels", inject(function ($compile, $rootScope) {
