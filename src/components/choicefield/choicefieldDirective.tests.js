@@ -7,11 +7,20 @@ describe("choicefieldDirective", function () {
     });
     it("should have unique ids", inject(function ($compile, $rootScope) {
         var $scope = $rootScope.$new();
-        var choiceField1 = $compile('<uif-choicefield checked="checked" label="Test"></uif-textbox>')($scope);
+        $scope["value"] = "test";
+        var choiceField1 = $compile('<uif-choicefield-group ng-model="value">' +
+            '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
+            '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
+            '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
+            '</uif-choicefield-group>')($scope);
         $scope.$digest();
         var input1 = $(choiceField1[0]).find('.ms-ChoiceField-input');
         var id1 = input1[0].id;
-        var choiceField2 = $compile('<uif-choicefield checked="checked" label="Test"></uif-textbox>')($scope);
+        var choiceField2 = $compile('<uif-choicefield-group ng-model="value">' +
+            '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
+            '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
+            '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
+            '</uif-choicefield-group>')($scope);
         $scope.$digest();
         var input2 = $(choiceField2[0]).find('.ms-ChoiceField-input');
         var id2 = input2[0].id;
@@ -19,21 +28,31 @@ describe("choicefieldDirective", function () {
     }));
     it("should be able to set value", inject(function ($compile, $rootScope) {
         var $scope = $rootScope.$new();
-        $scope.checked = true;
-        var choiceField = $compile('<uif-choicefield checked="checked" label="Test"></uif-textbox>')($scope);
+        $scope.value = "Test1";
+        var choiceField = $compile('<uif-choicefield-group ng-model="value">' +
+            '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
+            '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
+            '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
+            '</uif-choicefield-group>')($scope);
         $scope.$digest();
-        var input = $(choiceField[0]).find('.ms-ChoiceField-input');
+        var inputs = $(choiceField[0]).find('.ms-ChoiceField-input');
+        var input = $(inputs[0]);
         expect(input.prop("checked")).toBe(true);
-        $scope.checked = false;
+        $scope.value = "Test2";
         $scope.$digest();
         expect(input.prop("checked")).toBe(false);
     }));
-    it("should be able to set label", inject(function ($compile, $rootScope) {
+    it("should be able to set HTML as the label", inject(function ($compile, $rootScope) {
         var $scope = $rootScope.$new();
         $scope.checked = true;
-        var choiceField = $compile('<uif-choicefield checked="checked">Test</uif-textbox>')($scope);
+        var choiceField = $compile('<uif-choicefield-group ng-model="value">' +
+            '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
+            '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
+            '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
+            '</uif-choicefield-group>')($scope);
         $scope.$digest();
-        var label = $(choiceField[0]).find('.ms-Label span');
-        expect(label.html()).toBe("Test");
+        var labels = $(choiceField[0]).find('.ms-Label a');
+        var label = $(labels[2]);
+        expect(label.html()).toBe("Test 3");
     }));
 });

@@ -32,7 +32,12 @@
 <p>Selected value: {{selectedValue}}</p>
 
     <h1 class="ms-font-su">Choicefield</h1>
-    <uif-choicefield><a href="https://google.com">Test</a></uif-choicefield>
-    
+    <uif-choicefield-group ng-model="choiceValue">
+        <uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>
+        <uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>
+        <uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>
+    </uif-choicefield-group>
+    <h2>{{choiceValue}}</h2>
+
 </body>
 </html>
