@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Test-Office-UI-Fabric-Angular-Directives</id>
-        <version>0.0.0.13-alpha</version>
+        <version>0.0.0.14-alpha</version>
         <authors>RolandO</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>My package description.</description>

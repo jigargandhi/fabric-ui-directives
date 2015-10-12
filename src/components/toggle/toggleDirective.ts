@@ -6,8 +6,8 @@ Usage:
 
 class ToggleDirective implements ng.IDirective {
     
-    template = '<div class="ms-Toggle">' +
-                 '<span class="ms-Toggle-description">{{desc}}</span>' +
+    template = '<div ng-class="toggleClass">' +
+                 '<span class="ms-Toggle-description"><ng-transclude/></span>' +
                 '<input type="checkbox" id="{{uniqueId}}" class="ms-Toggle-input" ng-model="toggled" />' +
                 '<label for="{{uniqueId}}" class="ms-Toggle-field">' +
                     '<span class="ms-Label ms-Label--off">{{labelOff}}</span>' +
@@ -16,18 +16,27 @@ class ToggleDirective implements ng.IDirective {
                 '</div>';
     constructor() {
     }
+    transclude = true;
     uniqueId = 1;
     scope = {
-        labelOff: "@labelOff",
-        labelOn: "@labelOn",
-        desc: "@desc",
-        toggled: "=toggled"
+        labelOff: "@",
+        labelOn: "@",
+        toggled: "="
     }
 
     link(scope, elem, attrs) {
         if (!this.uniqueId)
             this.uniqueId = 1;
         scope.uniqueId = this.uniqueId++;
+
+        scope.toggleClass = "ms-Toggle";
+        
+        if (attrs["textLocation"]) {
+            
+            var loc = attrs["textLocation"];
+            loc = loc.charAt(0).toUpperCase() + loc.slice(1);
+            scope.toggleClass += " ms-Toggle--text" + loc;
+        }
     }
 
     static factory(): ng.IDirectiveFactory {
