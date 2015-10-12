@@ -42,10 +42,10 @@
     it("should be able to set label", inject(($compile, $rootScope) => {
         var $scope = $rootScope.$new();
         $scope.checked = true;
-        var choiceField = $compile('<uif-choicefield checked="checked" label="Test"></uif-textbox>')($scope);
+        var choiceField = $compile('<uif-choicefield checked="checked">Test</uif-textbox>')($scope);
         $scope.$digest();
 
-        var label = $(choiceField[0]).find('.ms-Label');
+        var label = $(choiceField[0]).find('.ms-Label span');
         expect(label.html()).toBe("Test");
         
     }));

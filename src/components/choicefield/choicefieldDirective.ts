@@ -2,14 +2,15 @@
 
     template = '<div class="ms-ChoiceField">' +
     '<input id="{{uniqueId}}" class="ms-ChoiceField-input" type="radio" ng-checked="checked">' +
-    '<label for="{{uniqueId}}" class="ms-ChoiceField-field"><span class="ms-Label">{{label}}</span></label>' +
+
+    '<label for="{{uniqueId}}" class="ms-ChoiceField-field"><span class="ms-Label"><ng-transclude/></span></label>' +
     '</div>';
     constructor() {
     }
     uniqueId = 1;
+    transclude = true;
     scope = {
-        checked: "=",
-        label: "@"
+        checked: "="
     }
 
     link(scope, elem, attrs) {

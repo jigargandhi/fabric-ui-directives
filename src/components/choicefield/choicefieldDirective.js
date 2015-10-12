@@ -2,12 +2,12 @@ var ChoiceFieldDirective = (function () {
     function ChoiceFieldDirective() {
         this.template = '<div class="ms-ChoiceField">' +
             '<input id="{{uniqueId}}" class="ms-ChoiceField-input" type="radio" ng-checked="checked">' +
-            '<label for="{{uniqueId}}" class="ms-ChoiceField-field"><span class="ms-Label">{{label}}</span></label>' +
+            '<label for="{{uniqueId}}" class="ms-ChoiceField-field"><span class="ms-Label"><ng-transclude/></span></label>' +
             '</div>';
         this.uniqueId = 1;
+        this.transclude = true;
         this.scope = {
-            checked: "=",
-            label: "@"
+            checked: "="
         };
     }
     ChoiceFieldDirective.prototype.link = function (scope, elem, attrs) {
