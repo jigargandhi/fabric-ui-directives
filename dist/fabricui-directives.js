@@ -530,3 +530,4 @@ var ToggleDirective = (function () {
 })();
 angular.module("fabric.ui.components.toggle", ['fabric.ui.components'])
     .directive("uifToggle", ToggleDirective.factory());
+
