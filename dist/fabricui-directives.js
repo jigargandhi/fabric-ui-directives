@@ -387,7 +387,7 @@ var DropdownController = (function () {
                 $(evt.target).siblings('.ms-Dropdown-item').removeClass('is-selected');
                 $(evt.target).addClass('is-selected');
                 _this.$scope.selectedValue = $(evt.target).html();
-                _this.$scope.$digest();
+                _this.$scope.$apply();
             }
         });
     };

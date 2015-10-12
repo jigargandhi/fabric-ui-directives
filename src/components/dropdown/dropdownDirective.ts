@@ -66,7 +66,7 @@
                 $(evt.target).addClass('is-selected');
 
                 this.$scope.selectedValue = $(evt.target).html();
-                this.$scope.$digest();
+                this.$scope.$apply();
             }
         });
     }

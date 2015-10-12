@@ -7,6 +7,7 @@ angular.module('testApp', ['fabric.ui.components', 'fabric.ui.components.datepic
 var controller = angular.module('testApp').controller("testController", function ($scope) {
     $scope.toggled = false;
     $scope.date = new Date();
+    $scope.selectedValue = "Undefined";
     $scope["options"] = [
         { text: "Option 1" },
         { text: "Option 2" },
