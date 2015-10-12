@@ -3,7 +3,8 @@
 angular.module('testApp', ['fabric.ui.components', 'fabric.ui.components.datepicker',
     'fabric.ui.components.toggle',
     'fabric.ui.components.textbox',
-    'fabric.ui.components.dropdown'
+    'fabric.ui.components.dropdown',
+    'fabric.ui.components.choicefield'
 ]);
 
 var controller = angular.module('testApp').controller("testController", function ($scope) {
