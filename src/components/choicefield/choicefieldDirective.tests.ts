@@ -61,10 +61,45 @@
 
     }));
 
-    it("should be able to set HTML as the label", inject(($compile, $rootScope) => {
+    it("should be able to set the group label & required", inject(($compile, $rootScope) => {
+        var $scope = $rootScope.$new();
+
+        var choiceField = $compile(
+            '<uif-choicefield-group ng-model="value" label="Select something" required="true" is-required="true">' +
+            '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
+            '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
+            '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
+            '</uif-choicefield-group>'
+        )($scope);
+        $scope.$digest();
+
+        var group = $(choiceField[0]).find('.ms-ChoiceFieldGroup');
+        var groupLabel = group.find('.ms-ChoiceFieldGroup-title label');
+
+        expect(groupLabel.hasClass("is-required")).toBe(true);
+        expect(groupLabel.html()).toBe("Select something");
+
+
+        choiceField = $compile(
+            '<uif-choicefield-group ng-model="value" label="Now dont do anything">' +
+            '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
+            '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
+            '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
+            '</uif-choicefield-group>'
+        )($scope);
+        $scope.$digest();
+        
+        group = $(choiceField[0]).find('.ms-ChoiceFieldGroup');
+        groupLabel = group.find('.ms-ChoiceFieldGroup-title label');
+
+        expect(groupLabel.html()).toBe("Now dont do anything");
+        expect(groupLabel.hasClass("is-required")).toBe(false);
+    }));
+
+    it("should be able to set HTML as the label for a choice", inject(($compile, $rootScope) => {
         
         var $scope = $rootScope.$new();
-        $scope.checked = true;
+        
         var choiceField = $compile(
             '<uif-choicefield-group ng-model="value">' +
             '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +

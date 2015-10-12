@@ -43,8 +43,8 @@ var Fabric;
                     function ChoiceFieldGroupDirective() {
                         this.restrict = 'E';
                         this.template = '<div class="ms-ChoiceFieldGroup">' +
-                            '<div class= "ms-ChoiceFieldGroup-title">' +
-                            '<label class="ms-Label is-required">{{label}}</label>' +
+                            '<div class="ms-ChoiceFieldGroup-title">' +
+                            '<label ng-class="{\'ms-Label\' : true, \'is-required\' : isRequired}">{{label}}</label>' +
                             '</div>' +
                             '<ng-transclude/>' +
                             '</div>';
@@ -56,6 +56,9 @@ var Fabric;
                         this.require = ["uifChoicefieldGroup", "ngModel"];
                     }
                     ChoiceFieldGroupDirective.prototype.link = function (scope, elem, attrs, ctrls) {
+                        scope.isRequired = false;
+                        if (attrs["isRequired"])
+                            scope.isRequired = attrs["isRequired"];
                         var groupController = ctrls[0];
                         var modelController = ctrls[1];
                         groupController.init(modelController);

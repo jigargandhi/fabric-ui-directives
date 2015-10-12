@@ -38,16 +38,20 @@
         restrict = 'E';
         template =
             '<div class="ms-ChoiceFieldGroup">' +
-                '<div class= "ms-ChoiceFieldGroup-title">' +
-                    '<label class="ms-Label is-required">{{label}}</label>' +
+                '<div class="ms-ChoiceFieldGroup-title">' +
+                    '<label ng-class="{\'ms-Label\' : true, \'is-required\' : isRequired}">{{label}}</label>' +
                 '</div>' +
                 '<ng-transclude/>' +
             '</div>';
         transclude = true;
         scope = {
-          label : "@"  
+            label: "@"
+            
         };
         link(scope, elem, attrs, ctrls) {
+            scope.isRequired = false;
+            if (attrs["isRequired"])
+                scope.isRequired = attrs["isRequired"];
             var groupController : ChoiceFieldGroupController = ctrls[0];
             var modelController = ctrls[1];
 
