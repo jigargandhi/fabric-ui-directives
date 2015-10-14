@@ -432,7 +432,7 @@ var Fabric;
                         }
                         DatePickerController.initDatepicker($($element), ngModel);
                         ngModel.$render = function () {
-                            if (ngModel.$modelValue !== "")
+                            if (ngModel.$modelValue !== "" && typeof ngModel.$modelValue !== "undefined")
                                 DatePickerController.setValue($($element), new Date(ngModel.$modelValue));
                         };
                     };
