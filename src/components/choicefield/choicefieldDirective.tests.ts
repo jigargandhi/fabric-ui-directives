@@ -65,7 +65,7 @@
         var $scope = $rootScope.$new();
 
         var choiceField = $compile(
-            '<uif-choicefield-group ng-model="value" label="Select something" required="true" is-required="true">' +
+            '<uif-choicefield-group ng-model="value" label="Select something" required>' +
             '<uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>' +
             '<uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>' +
             '<uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>' +
@@ -76,7 +76,7 @@
         var group = $(choiceField[0]).find('.ms-ChoiceFieldGroup');
         var groupLabel = group.find('.ms-ChoiceFieldGroup-title label');
 
-        expect(groupLabel.hasClass("is-required")).toBe(true);
+        expect(groupLabel.hasClass("is-required")).toBe(true, "should have is-required");
         expect(groupLabel.html()).toBe("Select something");
 
 

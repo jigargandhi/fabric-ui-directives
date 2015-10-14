@@ -11,33 +11,49 @@
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css"/>
     <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css"/>
     <script src="index.js"></script>
+    <style type="text/css">
+        .css-form input.ng-invalid.ng-touched {
+            background-color: #FA787E;
+        }
+
+        .css-form input.ng-valid.ng-touched {
+            background-color: #78FA89;
+        }
+    </style>
 </head>
 
 <body ng-app="testApp" ng-controller="testController">
-    <h1 class="ms-font-su">Toggle</h1>
-    <uif-toggle label-off="Off" label-on="On" toggled="toggled" text-location="right">Toggle this</uif-toggle>
-    <span>Toggled: {{toggled}}</span>
-    
-    <h1 class="ms-font-su">Textbox</h1>
-    <input type="text" ng-model="testTextBox"/>
+    <form novalidate class="css-form" name="mainForm">
+        <h1 class="ms-font-su">Toggle</h1>
+        <uif-toggle label-off="Off" label-on="On" toggled="toggled" text-location="right">Toggle this</uif-toggle>
+        <span>Toggled: {{toggled}}</span>
 
-    <!--<uif-textbox value="testTextBox"/>-->
+        <h1 class="ms-font-su">Textbox</h1>
+        <input type="text" ng-model="testTextBox" required />
+
+        <!--<uif-textbox value="testTextBox"/>-->
 
 
-    <h1 class="ms-font-su">Datepicker</h1>
-<uif-datepicker ng-model="date" months="Jan,Feb,Maa,Apr,Mei,Jun,Jul,Aug,Sep,Okt,Nov,Dec"></uif-datepicker>
+        <h1 class="ms-font-su">Datepicker</h1>
+        <uif-datepicker ng-model="date" months="Jan,Feb,Maa,Apr,Mei,Jun,Jul,Aug,Sep,Okt,Nov,Dec"></uif-datepicker>
 
-    <h1 class="ms-font-su">Dropdown</h1>
-    <uif-dropdown options="options" selectedValue="selectedValue"></uif-dropdown>
-<p>Selected value: {{selectedValue}}</p>
+        <h1 class="ms-font-su">Dropdown</h1>
+        <uif-dropdown options="options" selectedValue="selectedValue"></uif-dropdown>
+        <p>Selected value: {{selectedValue}}</p>
 
-    <h1 class="ms-font-su">Choicefield</h1>
-    <uif-choicefield-group ng-model="choiceValue" label="Select something" >
-        <uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>
-        <uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>
-        <uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>
-    </uif-choicefield-group>
-    <h2>{{choiceValue}}</h2>
+        <h1 class="ms-font-su">Choicefield</h1>
+        <uif-choicefield-group ng-model="choiceValue" label="Select something" required id="choiceValue" name="choiceValue">
+            <uif-choicefield value="Test1"><a href="#">Test 1</a></uif-choicefield>
+            <uif-choicefield value="Test2"><a href="#">Test 2</a></uif-choicefield>
+            <uif-choicefield value="Test3"><a href="#">Test 3</a></uif-choicefield>
+        </uif-choicefield-group>
+
+        <div>
+            <span ng-show="mainForm.choiceValue.$error.required">Required.</span>
+        </div>
+        <h2>{{choiceValue}}</h2>
+        <input type="submit" value="submit"/>
+    </form>
 
 </body>
 </html>

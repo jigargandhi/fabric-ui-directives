@@ -39,7 +39,7 @@
         template =
             '<div class="ms-ChoiceFieldGroup">' +
                 '<div class="ms-ChoiceFieldGroup-title">' +
-                    '<label ng-class="{\'ms-Label\' : true, \'is-required\' : isRequired}">{{label}}</label>' +
+                    '<label ng-class="{\'ms-Label\' : true, \'is-required\' : required}">{{label}}</label>' +
                 '</div>' +
                 '<ng-transclude/>' +
             '</div>';
@@ -49,14 +49,18 @@
             
         };
         link(scope, elem, attrs, ctrls) {
-            scope.isRequired = false;
-            if (attrs["isRequired"])
-                scope.isRequired = attrs["isRequired"];
-            var groupController : ChoiceFieldGroupController = ctrls[0];
+            var groupController: ChoiceFieldGroupController = ctrls[0];
             var modelController = ctrls[1];
-
+            scope.required = false;
+            attrs.$observe('required', value => {
+                scope.required = value;
+                if (scope.required) {
+                    modelController.$validators["required"] = modelValue => {
+                        return typeof modelValue !== "undefined" && modelValue !== "";
+                    }
+                }
+            });
             groupController.init(modelController);
-
         }
         controller = ChoiceFieldGroupController;
         require = ["uifChoicefieldGroup", "ngModel"];
