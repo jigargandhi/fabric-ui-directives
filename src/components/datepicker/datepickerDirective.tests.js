@@ -34,8 +34,12 @@ describe("datepickerDirective", function () {
     it("Should be able to set and retrieve a value", inject(function ($compile, $rootScope) {
         var $scope = $rootScope.$new();
         $scope.value = "";
-        var datepicker = $compile('<uif-datepicker ng-model="value"></uif-datepicker>')($scope);
+        console.log("1");
+        var datepicker = $compile('<uif-datepicker ng-model="value" placeholder-text="TEST"></uif-datepicker>')($scope);
         $scope.$digest();
+        console.log("2");
+        expect($scope.value).toBe("");
+        console.log("3");
         var goToday = $(datepicker[0]).find('.ms-DatePicker-goToday');
         goToday.click();
         $scope.$digest();
@@ -67,7 +71,7 @@ describe("datepickerDirective", function () {
         // verify default value
         var input = $(datepicker[0]).find('.ms-TextField-field');
         expect(input.attr("Placeholder")).toBe("Select a date");
-        datepicker = $compile('<uif-datepicker ng-model="value" place-holder-text="Please, find a date"></uif-datepicker>')($scope);
+        datepicker = $compile('<uif-datepicker ng-model="value" placeholder-text="Please, find a date"></uif-datepicker>')($scope);
         $scope.$digest();
         // verify custom value
         input = $(datepicker[0]).find('.ms-TextField-field');

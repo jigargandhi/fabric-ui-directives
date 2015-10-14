@@ -249,7 +249,7 @@ var Fabric;
                         this.template = '<span>{{bar}}</span><div class="ms-TextField">' +
                             '<label class="ms-Label">{{startLabel}}</label>' +
                             '<i class="ms-DatePicker-event ms-Icon ms-Icon--event"></i>' +
-                            '<input class="ms-TextField-field" type="text" placeholder="{{placeHolderText}}">' +
+                            '<input class="ms-TextField-field" type="text" placeholder="{{placeholderText}}">' +
                             '</div>' +
                             '<div class="ms-DatePicker-monthComponents">' +
                             '<span class="ms-DatePicker-nextMonth js-nextMonth"><i class="ms-Icon ms-Icon--chevronRight"></i></span>' +
@@ -278,7 +278,7 @@ var Fabric;
                         this.scope = {
                             months: "@",
                             startLabel: "@",
-                            placeHolderText: "@"
+                            placeholderText: "@"
                         };
                         this.require = "ngModel";
                         this.controller = DatePickerController;
@@ -291,8 +291,8 @@ var Fabric;
                         if (!$scope.startLabel) {
                             $scope.startLabel = "Start Date";
                         }
-                        if (!$scope.placeHolderText) {
-                            $scope.placeHolderText = "Select a date";
+                        if (!$scope.placeholderText) {
+                            $scope.placeholderText = "Select a date";
                         }
                         $scope.monthsArray = $scope.months.split(',');
                         if ($scope.monthsArray.length !== 12) {
@@ -300,8 +300,8 @@ var Fabric;
                         }
                         DatePickerController.initDatepicker($($element), ngModel);
                         ngModel.$render = function () {
-                            console.log("RENDER!" + ngModel.$modelValue);
-                            DatePickerController.setValue($($element), new Date(ngModel.$modelValue));
+                            if (ngModel.$modelValue !== "")
+                                DatePickerController.setValue($($element), new Date(ngModel.$modelValue));
                         };
                     };
                     DatePickerDirective.factory = function () {
