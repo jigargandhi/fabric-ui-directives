@@ -54,12 +54,10 @@
             scope.required = false;
             attrs.$observe('required', value => {
                 scope.required = value;
-                if (scope.required) {
-                    modelController.$validators["required"] = modelValue => {
-                        return typeof modelValue !== "undefined" && modelValue !== "";
-                    }
-                }
             });
+            modelController.$validators["required"] = modelValue => {
+                return !scope.required || (typeof modelValue !== "undefined" && modelValue !== "");
+            }
             groupController.init(modelController);
         }
         controller = ChoiceFieldGroupController;

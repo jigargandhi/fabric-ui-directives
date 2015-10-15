@@ -11,6 +11,7 @@ var controller = angular.module('testApp').controller("testController", function
     $scope.toggled = false;
     $scope.date = "";
     $scope.selectedValue = "Undefined";
+    $scope.choiceRequired = true;
     //$scope.choiceValue = "Test1";
     $scope["options"] = [
         { text: "Option 1" },

@@ -68,12 +68,10 @@ var Fabric;
                         scope.required = false;
                         attrs.$observe('required', function (value) {
                             scope.required = value;
-                            if (scope.required) {
-                                modelController.$validators["required"] = function (modelValue) {
-                                    return typeof modelValue !== "undefined" && modelValue !== "";
-                                };
-                            }
                         });
+                        modelController.$validators["required"] = function (modelValue) {
+                            return !scope.required || (typeof modelValue !== "undefined" && modelValue !== "");
+                        };
                         groupController.init(modelController);
                     };
                     ChoiceFieldGroupDirective.factory = function () {
